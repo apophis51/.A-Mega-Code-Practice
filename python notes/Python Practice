@@ -1,0 +1,217 @@
+'''
+x = 'outside'
+
+def report():
+    #global x  #reassigns x to global
+    x = 'inside'
+    return x
+
+print(report())
+print(x)
+'''
+'''
+class NameOfClass():
+    def __init__(self,param1,param2): #initializes the class
+        self.param1 = param1    #class object attribute
+        self.param2 = param2
+
+    def some_method(self):
+        #perform some action
+        print(self.param1)
+'''
+'''
+class Sample():
+    pass
+
+x = Sample() #instantiating the class
+print(type(x))
+'''
+'''
+class Dog():
+    #class object attribute are true for any instance of the class
+    species = 'mammal'
+
+    def __init__(self,input_breed,name): #this special method is a dunder method becuase it has two underscores
+        self.breed = input_breed  #by convention both the argument and the attribute are the same so we need to change input_breed to breed
+        self.name = name
+
+sam = Dog('Lab','Sam')
+new_dog = Dog('Golden','cindy')
+print(type(sam))
+print(sam.breed) #accessing the breed attribute
+y = Dog(input_breed='Huskie',name='Frankie')
+print(sam.breed)
+print(sam.name)
+print(sam.species)
+'''
+'''
+class Circle():
+    #class object attribute
+    pi = 3.14
+
+    def __init__(self,radius=1): #default radius is 1 if you don't pass in a value
+        self.radius = radius
+        self.area = radius * radius * Circle.pi
+
+    #method
+    def get_circumference(self):   #every method in a class needs to have self as the first argument, it tells python that we are referring to the instance of the class
+        return self.radius * self.pi * 2 #python wont understand if we just had radius * pi * 2 because it doesn't know what radius and pi are
+
+mycircle = Circle(30)
+new_circle = Circle()
+print(new_circle.radius)
+print(mycircle.radius)
+print(mycircle.area)
+print(mycircle.get_circumference())
+
+'''
+'''
+class Animal():
+    def __init__(self,fur):
+        self.fur = fur
+        print('Animal Created')
+
+    def who_am_i(self):
+        print('I am an animal')
+
+    def eat(self):
+        print('I am eating')
+class Dog(Animal):
+    def __init__(self,fur):
+        Animal.__init__(self,fur) #this is how create instance of parent class
+        print('Dog Created')
+
+    def who_am_i(self):
+        print('I am a dog') #this overrides the parent class method
+
+    def bark(self):
+        print('WOOF!')
+
+a = Animal('fuzz') #create instance
+a.eat()
+a.who_am_i()
+d = Dog('black')
+d.eat()
+d.who_am_i()
+print(d.fur)
+'''
+'''
+class Book():
+    def __init__(self,title,author,pages):
+        self.title = title
+        self.author = author
+        self.pages = pages
+    
+    def __repr__(self):  ## special method that returns a string
+
+        return f'{self.title} by {self.author}'
+
+    def __len__(self):
+        return self.pages
+        '''
+    
+'''
+    def __str__(self):  ## special method that returns a string
+        return f'{self.title} by {self.author}'
+
+
+
+    def __del__(self):
+        print('A book object has been deleted')
+'''
+'''
+mybook = Book('Python Rocks','Jose',250)
+print(mybook)
+length_book = len(mybook)
+print(length_book)
+'''
+'''
+class Account():
+    def __init__(self,owner,balance=0):
+        self.owner = owner
+        self.balance = balance
+
+    def __str__(self):
+        return f'Account owner: {self.owner}. Account balance: ${self.balance}'
+
+    def deposit(self,dep_amt):
+        self.balance = self.balance + dep_amt
+        print('Deposit Accepted')
+
+    def withdraw(self,wd_amt):
+        if self.balance >= wd_amt:
+            self.balance = self.balance - wd_amt
+            print('Withdrawal Accepted')
+        else:
+            print('Funds Unavailable!')
+
+#1. Instantiate the class
+acct1 = Account('Jose',100)
+
+#2. Print the object
+print(acct1)
+
+#3. Show the account owner attribute
+print(acct1.owner)
+
+#4. Show the account balance attribute
+print(acct1.balance)
+
+#5. Make a series of deposits and withdrawals
+acct1.deposit(50)
+
+#6. Make a withdrawal that exceeds the available balance
+acct1.withdraw(75)  
+
+#7. Make a withdrawal that exceeds the available balance
+acct1.withdraw(500)     
+'''
+'''
+def hello(name ='Jose'):
+    print('the hello() function has been executed')
+
+    def greet():
+        return '\t This is inside greet()'
+    
+    def welcome():
+        return '\t This is inside welcome()'
+
+    if name == 'Jose':
+        return greet
+    else:
+        return welcome
+
+#x = greet()
+x = hello('malcolm')
+print(x())
+'''
+'''
+def new_decorator(func):
+
+    def wrap_func():
+        print('Code here before executing func')
+
+        func()
+
+        print('Code here will execute after func()')
+
+    return wrap_func
+
+@new_decorator
+def func_needs_decorator():
+    
+    print('This function is in need of a Decorator')
+
+#func_needs_decorator = new_decorator(func_needs_decorator)
+func_needs_decorator()     
+'''
+'''
+from moduletest import my_func
+
+my_func()
+'''
+from mytestpackage import mainscript
+from mytestpackage.SubPackage import mysubscript
+
+mainscript.report_main()
+mysubscript.sub_report()

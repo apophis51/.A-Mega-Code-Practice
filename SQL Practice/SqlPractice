@@ -1,0 +1,42 @@
+import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+#dir name is the directory name of the current file /SQL Practice/SqlPractice.py
+#absolute path is the full path of the current file so it will be C:\Users\malco\Documents\SQL Practice\SqlPractice.py
+#__file__ --> C:\Users\user\Documents\SQL Practice\SqlPractice.py
+#inststead of using a string this is why we use os.path.abspath(__file__) so it will be C:\Users\user\Documents\SQL Practice\SqlPractice.py
+#this dir works for any operating system
+basedir =  os.path.abspath(os.path.dirname(__file__)) #__file__ is the current file SQLPractice.py
+print(basedir)
+#basedir is where we want to build our database
+
+#now we want to build our application
+
+app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir,'data.sqlite')#connect flask to the database
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #turn off the flask tracker
+db = SQLAlchemy(app) #create the database
+
+
+#now we want to create a model
+class Puppy(db.Model):
+    #create table
+    __tablename__ = 'puppies' #override the default name of the table
+    #create columns
+    #if you have two puppies with the same name you can use primary key to identify them
+    id = db.Column(db.Integer,primary_key = True) #integer is the column  // primary key is unique identifier for row
+    name = db.Column(db.Text)
+    age = db.Column(db.Integer)
+    #create relationships
+    owner = db.relationship('Owner',backref = 'puppy',uselist = False)
+    #create constructor
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+    #create representation
+    def __repr__(self):  #string representation of the object/ makes it easier for debugging because we cant print out the object
+        if self.owner:
+            return f"Puppy {self.name} is {self.age} and owner is {self.owner.name}"
+        else:
+            return f"Puppy name is {self.name} and has no owner yet"
